@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app">
+        <fieldset>
+            <legend>组件实例</legend>
+           {{message}}
+           <button @click="change">点击改变</button>
+        </fieldset>
+    </div>
+    <script>
+        const App = {
+            data() {
+                return {
+                    message:"Hello Vue3"
+                }
+            },
+            methods: {
+                change(){
+                    console.log(this);
+                    this.message = "你好胡雪"
+                }
+            },
+        }
+        const app = Vue.createApp(App)  //app应用实例
+
+        console.log(app);
+        const vm = app.mount('#app')  //vm根组件实例
+        console.log(vm);  
+    </script>
+</body>
+
+</html>

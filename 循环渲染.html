@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app">
+        <fieldset>
+            <legend>循环渲染</legend>
+            <ul>
+                <li v-for="item in items">
+                    {{item}}
+                </li>
+            </ul>
+            <button @click="add">添加列表元素</button>
+        </fieldset>
+    </div>
+    <script>
+        const App = {
+            data() {
+                return {
+                    items: ["item0", "item1"]
+                }
+            },
+            methods: {
+                add() {
+                    this.items.push('item' + this.items.length)
+                }
+
+            },
+        }
+        Vue.createApp(App).mount('#app')
+    </script>
+</body>
+
+</html>

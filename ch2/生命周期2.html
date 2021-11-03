@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app">
+        <fieldset>
+            <legend>生命周期钩子</legend>
+            <child v-if="isShow"></child>
+            <button @click="isShow = !isShow">点击改变isShow,子组件消失与展示</button>
+        </fieldset>
+    </div>
+    <script>
+// root beforeCreate undefined null
+// 生命周期2.html:27 root created undefined null
+// 生命周期2.html:30 root beforeMount undefined null
+// 生命周期2.html:46 child beforeCreated
+// 生命周期2.html:49 child created
+// 生命周期2.html:52 child beforeMounted
+// 生命周期2.html:55 child mounted
+// 生命周期2.html:33 root mounted undefined <fieldset>​…​</fieldset>​
+// 生命周期2.html:58 child beforeUnmount
+// 生命周期2.html:61 child unmounted
+// 生命周期2.html:46 child beforeCreated
+// 生命周期2.html:49 child created
+// 生命周期2.html:52 child beforeMounted
+// 生命周期2.html:55 child mounted
+        const App = {
+            data() {
+                return {
+                    isShow: true
+                }
+            },
+            beforeCreate() {
+                console.log('root beforeCreate', this.message, this.$el); //this.$el挂载之后的页面的dom元素
+            },
+            created() {
+                console.log('root created', this.message, this.$el);
+            },
+            beforeMount() {
+                console.log('root beforeMount', this.message, this.$el);
+            },
+            mounted() {
+                console.log('root mounted', this.message, this.$el);
+            },
+        }
+        const app = Vue.createApp(App) //app应用实例
+
+        app.component('child', {
+            template: '<div>{{text}}</div>',
+            data() {
+                return {
+                    text: "我是子组件"
+                }
+            },
+            beforeCreate() {
+                console.log('child beforeCreated')
+            },
+            created() {
+                console.log('child created')
+            },
+            beforeMount() {
+                console.log('child beforeMounted')
+            },
+            mounted() {
+                console.log('child mounted')
+            },
+            beforeUnmount() {
+                console.log('child beforeUnmount')
+            },
+            unmounted() {
+                console.log('child unmounted')
+            },
+        })
+        app.mount('#app') //vm根组件实例
+    </script>
+</body>
+
+</html>

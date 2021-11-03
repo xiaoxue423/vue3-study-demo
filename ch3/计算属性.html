@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app">
+        <fieldset>
+            <legend>计算属性</legend>
+            <p>{{name}}发表了{{count}}本书</p>
+            <button @click="add">添加书</button>
+        </fieldset>
+    </div>
+    <script>
+        // Vue.createApp(App).mount('#app')
+
+        const vm = Vue.createApp({
+            data() {
+                return {
+                    name:"胡雪",
+                    books:['book1']
+                }
+            },
+            methods: {
+                add(){
+                    this.books.push('book')
+                }
+            },
+            computed:{
+                count(){
+                    console.log('计算属性计算了');
+                    return this.books.length
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+
+</html>

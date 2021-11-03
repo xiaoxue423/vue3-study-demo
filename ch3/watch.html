@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app">
+        <fieldset>
+            <legend>计算属性</legend>
+            <input type="text" v-model="name">
+            不是返回的结果，而是一个Promise对象
+            {{result}}
+        </fieldset>
+    </div>
+    <script>
+        // Vue.createApp(App).mount('#app')
+
+        const delayer1s = () => new Promise(resolve => setTimeout(() => resolve('胡雪'), 1000))
+        const vm = Vue.createApp({
+            data() {
+                return {
+                    name: "",
+                }
+            },
+            // watch: {
+            //     //watch的方法名是data的属性  第一个参数是新值  第二个参数是旧值
+            //     async name(newname, oldname) {
+            //         //name变化的时候我们去发送请求获取结果  然后显示到页面中
+            //         let res = await delayer1s()
+            //         this.result = res
+            //         console.log(oldname + '-->' + newname +'-->'+ res);
+            //     }
+            // }
+            computed: {
+                async result() {
+                    let res = await delayer1s()
+                    this.result = res
+                }
+            }
+
+        }).mount('#app')
+    </script>
+</body>
+
+</html>

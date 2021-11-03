@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app">
+        <fieldset>
+            <legend>双向绑定</legend>
+            <p v-if="isShow">Hello Vu3</p>
+            <button @click="toggle">切换展示</button>
+        </fieldset>
+    </div>
+    <script>
+        const App = {
+            data() {
+                return {
+                    isShow: true
+                }
+            },
+            methods: {
+                toggle(){
+                    this.isShow = !this.isShow
+                }
+            },
+        }
+        Vue.createApp(App).mount('#app')
+    </script>
+</body>
+
+</html>
