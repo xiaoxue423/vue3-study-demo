@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app">
+        <font-size step="1" :val="fontSize" @add="fontSize += $event" @minus="fontSize -=$event"></font-size>
+
+        <font-size step="3" :val="fontSize" @add="fontSize += $event" @minus="fontSize -=$event"></font-size>
+
+        <p :style="{fontSize: fontSize + 'px'}">字号 {{fontSize}}</p>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    fontSize: 32
+                }
+            },
+        })
+
+        //注册组件
+        app.component("font-size", {
+            props: ['val', 'step'],
+            template: `
+            <div>
+                step:{{step}}  var:{{val}}'px'
+                <button @click="add"> 放大 </button>
+                <button @click="$emit('minus',step)"> 缩小 </button>
+            </div>
+            `,
+            methods: {
+                add() {
+                    //parseInt把它变成数字
+                    this.$emit("add", parseInt(this.step))
+                },
+                // minus(){
+                //     this.$emit("minus", parseInt(this.step))
+                // }
+            }
+        })
+        app.mount('#app')
+    </script>
+</body>
+
+</html>

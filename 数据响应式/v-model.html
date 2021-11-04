@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app">
+        <fieldset>
+            <legend>value和input</legend>
+            <!-- 监听input事件 -->
+            <input type="text" :value="name" @input="name = $event.target.value">
+            <input type="text" v-model="name">
+            {{name}}
+            <input v-model="name">
+            {{name}}
+        </fieldset>
+
+        <fieldset>
+            <legend>value和change</legend>
+            <textarea v-model.lazy="message" name="" id="" cols="30" rows="10"></textarea>
+            {{message}}
+        </fieldset>
+
+        <fieldset>
+            <legend>复选框</legend>
+            <input type="checkbox" v-model="checked">
+            {{checked}}
+        </fieldset>
+
+        <!-- 绑定一个变量 -->
+        <fieldset>
+            <legend>多个复选框</legend>
+            <input type="checkbox" v-model="list" value="a">
+            <input type="checkbox" v-model="list" value="b">
+            <input type="checkbox" v-model="list" value="c">
+            {{list}}
+        </fieldset>
+
+        <fieldset>
+            <legend>单选框</legend>
+            <input type="radio" v-model="theme" value="a">
+            <input type="radio" v-model="theme" value="b">
+            <input type="radio" v-model="theme" value="c">
+            {{theme}}
+        </fieldset>
+
+        <fieldset>
+            <legend>下拉菜单</legend>
+            <select v-model="selected">
+                <option value="全部">全部</option>
+                <option value="AA">A</option>
+                <option value="BB">B</option>
+                <option value="CC">C</option>
+            </select>
+            {{selected}}
+        </fieldset>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    name: "胡雪",
+                    message: "msg",
+                    checked: true,
+                    list: [],
+                    theme:'',
+                    selected:"全部"
+                }
+            },
+            methods: {
+                sayHello(arg) {
+                    console.log(arg);
+                },
+                sayHi(arg) {
+                    console.log(arg);
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app">
+      <button @click="sayHello">click1</button>
+      <button @click="sayHello('胡雪')">click2</button>
+      <button @click="sayHello($event)">click3</button>
+      <button @click.once="sayHello(name)">click4</button>
+      <button @click.stop="sayHello">click5</button>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    name:"胡雪"
+                }
+            },
+            methods: {
+             sayHello(arg){
+                 console.log(arg);
+             },
+             sayHi(arg){
+                 console.log(arg);
+             }
+            }
+        })
+        app.mount('#app')
+    </script>
+</body>
+
+</html>

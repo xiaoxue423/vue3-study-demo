@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app">
+        <fieldset>
+            <legend>Vue2响应式原理</legend>
+            <a :href="url" :title="title" target="_blank">Vue3.0官方文档</a>
+        </fieldset>
+    </div>
+    <script>
+        let obj = {}
+        Object.defineProperty(obj,'age',{
+            get:function(){
+                console.log('get age...');
+                return age
+            },
+            set:function(val){
+                console.log('set age...');
+                age = val
+            }
+        })
+        obj.age = 100   //'set age...'
+        console.log(obj.age); //'get age...',100
+
+        // Object.defineProperty实现响应式
+        function observe(data){
+            if(!data || typeof data !== 'object') return
+            for(let key in data){
+                let value = data[key]
+                Object.defineProperty(data,key,{
+
+
+                    get:function(){
+                        track(data,key)
+                        return value
+                    },
+                    set:function(newVal){
+                        trigger(data,key,newVal)
+                        value = newVal
+                    }
+                })
+                if(typeof value === 'object'){
+                    observe(value)  //递归
+                }
+            }
+        } 
+        //获取get函数
+        function track(data,key){
+            console.log('get data',key);
+        }
+
+        //设置set函数
+        function trigger(data,key,value){
+            console.log('set data',key,":",value);
+        }
+
+        let data = {
+            name:"huxue",
+            friends:[1,2,3]
+        }
+        observe(data)
+        console.log('*********');
+        console.log(data.name); //"huxue"
+        data.name = "leilei"  //set函数
+
+        data.friends[0] = 5  //set函数
+        data.friends[3] = 6  //非响应式   对对象观测后，之后新增的属性无响应式
+        data.age = 6  //非响应式 
+
+
+        // const App = {
+        //     data() {
+        //         return {
+        //             url:'https://v3.cn.vuejs.org/',
+        //             title:'Vue3.0官方文档' 
+        //         }
+        //     },  
+        // }
+        // Vue.createApp(App).mount('#app')
+    </script>
+</body>
+
+</html>

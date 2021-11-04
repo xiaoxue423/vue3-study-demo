@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 父组件通过v-model把属性传给子组件。子组件内有一个modelValue的Prop，接收父组件传递的数据。 -->
+        <!-- 子组件通过触发update:modelValue修改父组件绑定的属性 -->
+        <font-size step="1" v-model="fontSize"></font-size>
+
+        <font-size step="3" v-model="fontSize"></font-size>
+
+        <p :style="{fontSize: fontSize + 'px'}">字号 {{fontSize}}</p>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    fontSize: 32
+                }
+            },
+        })
+
+        //注册组件
+        app.component("font-size", {
+            props: ['modelValue', 'step'],
+            template: `
+            <div>
+                step:{{step}}   modelValue（fontSize）:{{ modelValue }} 'px'
+                <button @click="$emit('update:modelValue',+step+modelValue)"> 放大 </button>
+                <button @click="$emit('update:modelValue',modelValue-step)"> 缩小 </button>
+            </div>
+            `,
+            methods: {
+                add() {
+                    //parseInt把它变成数字
+                    this.$emit("add", parseInt(this.step))
+                },
+                // minus(){
+                //     this.$emit("minus", parseInt(this.step))
+                // }
+            }
+        })
+        app.mount('#app')
+    </script>
+</body>
+
+</html>

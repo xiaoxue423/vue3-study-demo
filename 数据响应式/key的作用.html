@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div v-for="(item,index) in items" :key="item.id">
+            <child></child>
+            <button @click="remove(index)">delete</button>
+        </div>
+        <button @click="add">add</button>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    items: []
+                }
+            },
+            methods: {
+                remove(index) {
+                    this.items.splice(index, 1)
+                },
+                add() {
+                    this.items.push({
+                        id: Math.random()
+                    })
+                }
+            }
+        })
+        app.component('child', {
+            data() {
+                return {
+                    counter: Math.random()
+                }
+            },
+            template: `<span>{{ counter }} </span>`
+        })
+        app.mount('#app')
+    </script>
+</body>
+
+</html>

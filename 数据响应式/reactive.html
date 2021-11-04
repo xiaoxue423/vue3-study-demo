@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+    <div id="app">
+        <fieldset>
+            <legend>Vue3响应式原理Proxy监控接管所有属性</legend>
+            <a :href="url" :title="title" target="_blank">Vue3.0官方文档</a>
+        </fieldset>
+    </div>
+    <script>
+        function track(data,key){
+            console.log('get data',key);
+        }
+        function trigger(data,key,value){
+            console.log('set data',key,":",value);
+        }
+        function reactive(obj){
+            const handler = {
+                get(target,prop,reactive){
+                    track(target,prop)
+                    const value = Reflect.get(...arguments)
+                    if(typeof value === "objec"){
+                        return reactive(value)
+                    }else{
+                        return value
+                    }
+                },
+                set(target,key,value,receiver){
+                    trigger(target,key,value)
+                    return Reflect.set(...arguments)
+
+                }
+            }
+            return new Proxy(obj,handler)
+        }
+        const dinner = {
+            meal:"泡面",
+            sucai:"菠菜"
+        }
+        const proxy = reactive(dinner)
+        proxy.meal = "apple"
+        proxy.list = []
+        proxy.lsit.push(1)   //响应式
+        
+
+
+
+
+
+
+
+      
+
+        // const handler = {
+        //     get:function(target,prop){ //target其实就是dinner对象,prop其实就是meal  对象的属性值
+        //         console.log('get...',prop);
+        //         //return target[prop] 
+        //         return Reflect.get(...arguments)   //Reflect.get()获取对象身上某个属性的值，类似于target[prop]
+        //     },
+        //     set(target,key,value){
+        //         console.log('set ...',key,value);
+        //         //target[key] = value
+        //         return Reflect.set(...arguments)
+        //     }
+        // }
+
+        // const proxy = new Proxy(dinner,handler)
+        // console.log(proxy.meal);
+        // console.log(proxy.sucai);
+
+    </script>
+</body>
+
+</html>
